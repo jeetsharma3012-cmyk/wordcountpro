@@ -1616,3 +1616,253 @@ analyze();
     <div>Created with care by <strong>Jeet Sharma</strong></div>
     <div>© 2026 Jeet Sharma. All rights reserved.</div>
 </footer>
+<div class="logo">JS</div>
+<button class="logo" id="jsCompanyLogo"
+        type="button"
+        aria-label="About JS Company"
+        aria-haspopup="dialog"
+        aria-controls="jsCompanyModal">
+    JS
+</button>
+<!-- JS Company Information Popup -->
+<div class="js-modal-overlay" id="jsCompanyModal"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="jsCompanyTitle"
+     hidden>
+
+    <div class="js-modal-card">
+
+        <button class="js-modal-close"
+                id="jsCompanyClose"
+                type="button"
+                aria-label="Close popup">
+            &times;
+        </button>
+
+        <div class="js-company-logo">JS</div>
+
+        <h2 id="jsCompanyTitle">JS Company</h2>
+
+        <p class="js-company-tagline">
+            Simple Tools. Smarter Work.
+        </p>
+
+        <div class="js-company-details">
+
+            <div class="js-info-row">
+                <span>Founder</span>
+                <strong>Jeet Sharma</strong>
+            </div>
+
+            <div class="js-info-row">
+                <span>Company</span>
+                <strong>JS Company</strong>
+            </div>
+
+            <div class="js-info-row">
+                <span>Product</span>
+                <strong>WordCount Pro</strong>
+            </div>
+
+            <div class="js-info-row">
+                <span>Website</span>
+                <strong>Online Text Tools</strong>
+            </div>
+
+        </div>
+
+        <p class="js-company-about">
+            WordCount Pro is a simple online platform
+            designed to help users count words, analyze
+            text and use helpful writing tools.
+        </p>
+
+        <div class="js-company-copyright">
+            &copy; 2026 JS Company. All Rights Reserved.
+        </div>
+
+    </div>
+</div>
+<style>
+    .js-modal-overlay[hidden] {
+        display: none !important;
+    }
+
+    .js-modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+        background: rgba(0, 0, 0, 0.72);
+        backdrop-filter: blur(6px);
+    }
+
+    .js-modal-card {
+        position: relative;
+        width: 100%;
+        max-width: 420px;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 30px 24px 24px;
+        border: 1px solid rgba(120, 140, 180, 0.3);
+        border-radius: 22px;
+        background: #111827;
+        color: #f9fafb;
+        text-align: center;
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+        animation: jsPopupIn 0.2s ease-out;
+    }
+
+    .js-company-logo {
+        display: flex;
+        width: 66px;
+        height: 66px;
+        margin: 0 auto 14px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        background: linear-gradient(135deg, #6366f1, #06b6d4);
+        color: white;
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: -1px;
+    }
+
+    .js-modal-card h2 {
+        margin: 0;
+        font-size: 27px;
+        font-weight: 750;
+    }
+
+    .js-company-tagline {
+        margin: 8px 0 22px;
+        color: #a5b4fc;
+        font-size: 14px;
+    }
+
+    .js-modal-close {
+        position: absolute;
+        top: 12px;
+        right: 14px;
+        width: 38px;
+        height: 38px;
+        border: 0;
+        border-radius: 50%;
+        background: #273244;
+        color: white;
+        font-size: 26px;
+        cursor: pointer;
+    }
+
+    .js-modal-close:hover {
+        background: #3b475b;
+    }
+
+    .js-company-details {
+        padding: 4px 14px;
+        border: 1px solid #303b4e;
+        border-radius: 14px;
+        text-align: left;
+    }
+
+    .js-info-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 13px 0;
+        border-bottom: 1px solid #303b4e;
+        font-size: 13px;
+    }
+
+    .js-info-row:last-child {
+        border-bottom: none;
+    }
+
+    .js-info-row span {
+        color: #9ca3af;
+    }
+
+    .js-info-row strong {
+        color: #f9fafb;
+        text-align: right;
+    }
+
+    .js-company-about {
+        margin: 20px 0;
+        color: #cbd5e1;
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    .js-company-copyright {
+        padding-top: 16px;
+        border-top: 1px solid #303b4e;
+        color: #9ca3af;
+        font-size: 11px;
+        line-height: 1.6;
+    }
+
+    @keyframes jsPopupIn {
+        from {
+            opacity: 0;
+            transform: translateY(8px) scale(0.98);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .js-modal-card {
+            animation: none;
+        }
+    }
+</style>
+
+<script>
+(function () {
+    const logo = document.getElementById("jsCompanyLogo");
+    const modal = document.getElementById("jsCompanyModal");
+    const closeButton = document.getElementById("jsCompanyClose");
+
+    if (!logo || !modal || !closeButton) {
+        return;
+    }
+
+    let previousFocus = null;
+
+    function openCompanyModal() {
+        previousFocus = document.activeElement;
+        modal.hidden = false;
+        closeButton.focus();
+    }
+
+    function closeCompanyModal() {
+        modal.hidden = true;
+
+        if (previousFocus && typeof previousFocus.focus === "function") {
+            previousFocus.focus();
+        }
+    }
+
+    logo.addEventListener("click", openCompanyModal);
+    closeButton.addEventListener("click", closeCompanyModal);
+
+    modal.addEventListener("click", function (event) {
+        if (event.target === modal) {
+            closeCompanyModal();
+        }
+    });
+
+    document.addEventListener("keydown", function (event) {
+        if (!modal.hidden && event.key === "Escape") {
+            closeCompanyModal();
+        }
+    });
+})();
+</script>
