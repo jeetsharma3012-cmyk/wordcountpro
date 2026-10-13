@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1020">
+<meta name="description" content="A free online writing toolkit for counting words, editing text, setting writing goals and more.">
+<title>WordCount Pro — Your Writing Toolkit</title>
+
+<style>
+:root {
+    --bg: #090d1a;
+    --panel: #11182b;
+    --panel2: #151e34;
+    --text: #f4f7ff;
+    --muted: #9ba9c5;
+    --border: #26334e;
+    --blue: #6c8cff;
+    --purple: #a879ff;
+    --green: #42d6a4;
+    --shadow: 0 18px 50px rgba(0,0,0,.2);
+}
+
+body.light {
+    --bg: #f3f6fc;
+    --panel: #ffffff;
+    --panel2: #f0f3fb;
+    --text: #18213a;
+    --muted: #62708c;
+    --border: #dce3f0;
+    --blue: #4569e8;
+    --purple: #8a52e8;
+    --green: #139a72;
+    --shadow: 0 12px 35px rgba(25,45,85,.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+
+body {
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    background:
+        radial-gradient(ellipse at 15% 0%, rgba(76,101,255,.12), transparent 34%),
+        radial-gradient(ellipse at 90% 20%, rgba(168,121,255,.10), transparent 32%),
+        var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    transition: background .25s, color .25s;
+}
+
+button, input, textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 3px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.container {
+    width: min(1160px, 92%);
+    margin: auto;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--bg);
+    background: color-mix(in srgb, var(--bg) 90%, transparent);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+}
+
+.navbar {
+    min-height: 76px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 21px;
+    font-weight: 850;
+    letter-spacing: -.6px;
+    white-space: nowrap;
+}
+
+.logo-icon {
+    width: 39px;
+    height: 39px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    color: white;
+    box-shadow: 0 6px 20px rgba(108,140,255,.25);
+}
+
+.logo span:last-child {
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.nav-links a {
+    color: var(--muted);
+    font-size: 14px;
+    transition: color .2s;
+}
+
+.nav-links a:hover {
+    color: var(--text);
+}
+
+.theme-btn, .menu-btn, .js-logo-btn {
+    width: 42px;
+    height: 42px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-size: 19px;
+}
+
+.menu-btn {
+    display: none;
+}
+
+.js-logo-btn {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(147, 51, 234, .55);
+    border-radius: 12px;
+    background: linear-gradient(135deg, #4f46e5, #9333ea);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, .22);
+    cursor: default;
+    flex-shrink: 0;
+}
+
+.hero {
+    padding: 76px 0 45px;
+    text-align: center;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    color: var(--muted);
+    border-radius: 30px;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+.eyebrow i {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 12px var(--green);
+}
+
+.hero h1 {
+    font-size: clamp(38px, 6.2vw, 70px);
+    line-height: 1.09;
+    letter-spacing: -2.8px;
+    max-width: 850px;
+    margin: 25px auto 20px;
+}
+
+.gradient-text {
+    background: linear-gradient(100deg, var(--blue), var(--purple), #e5a8ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    max-width: 650px;
+    margin: auto;
+    color: var(--muted);
+    font-size: 17px;
+}
+
+.hero-actions {
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.btn {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 18px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-weight: 750;
+    font-size: 14px;
+    transition: transform .2s, filter .2s, background .2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    border: none;
+    color: white;
+    background: linear-gradient(110deg, #5279ff, #9562ed);
+    box-shadow: 0 9px 25px rgba(90,110,255,.23);
+}
+
+.btn-primary:hover {
+    filter: brightness(1.12);
+}
+
+.btn-secondary {
+    background: var(--panel);
+    color: var(--text);
+}
+
+.trust-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 22px;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 27px;
+}
+
+.trust-row span::before {
+    content: "✓ ";
+    color: var(--green);
+    font-weight: bold;
+}
+
+.section {
+    padding: 38px 0 45px;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 20px;
+    margin-bottom: 22px;
+}
+
+.section-heading h2 {
+    font-size: clamp(23px, 4vw, 32px);
+    letter-spacing: -.8px;
+}
+
+.section-heading p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.text-link {
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 750;
+    white-space: nowrap;
+}
+
+.workspace {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 23px;
+    box-shadow: var(--shadow);
+}
+
+.workspace-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 17px;
+}
+
+.workspace-title {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.workspace-title h3 {
+    font-size: 17px;
+}
+
+.workspace-title p {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.live-badge {
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 750;
+}
+
+textarea, .field {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 13px;
+    padding: 17px;
+    outline: none;
+}
+
+textarea {
+    min-height: 235px;
+    resize: vertical;
+    line-height: 1.8;
+    font-size: 15px;
+}
+
+textarea:focus, .field:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(108,140,255,.1);
+}
+
+textarea::placeholder, .field::placeholder {
+    color: var(--muted);
+    opacity: .8;
+}
+
+.editor-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.small-btn {
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--panel2);
+    color: var(--text);
+    padding: 9px 12px;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.small-btn:hover {
+    border-color: var(--blue);
+}
+
+.small-btn.primary {
+    color: white;
+    background: linear-gradient(110deg, #5279ff, #9562ed);
+    border: none;
+}
+
+.status {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 13px;
+    margin-top: 18px;
+}
+
+.stat-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 20px;
+    transition: transform .2s, border-color .2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--blue);
+}
+
+.stat-card::after {
+    content: "";
+    position: absolute;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: rgba(108,140,255,.06);
+    right: -22px;
+    top: -22px;
+}
+
+.stat-label {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 9px;
+}
+
+.stat-number {
+    font-size: clamp(24px, 3vw, 33px);
+    font-weight: 850;
+    line-height: 1.25;
+    letter-spacing: -.6px;
+    overflow-wrap: anywhere;
+}
+
+.stat-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 8px;
+}
+
+.goal-panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    padding: 21px;
+    margin-top: 16px;
+}
+
+.goal-top {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.goal-top h3 {
+    font-size: 15px;
+}
+
+.goal-top p {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.goal-controls {
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+}
+
+.goal-controls input {
+    width: 140px;
+    min-width: 0;
+}
+
+.field {
+    padding: 9px 11px;
+    font-size: 13px;
+}
+
+.progress-track {
+    height: 9px;
+    background: var(--panel2);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    border-radius: inherit;
+    transition: width .25s;
+}
+
+.goal-caption {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.tools-section {
+    padding-top: 55px;
+}
+
+.tools-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 22px;
+}
+
+.tools-top h2 {
+    font-size: clamp(25px, 4vw, 34px);
+    letter-spacing: -.8px;
+}
+
+.tools-top p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.search-wrap {
+    width: min(310px, 100%);
+    position: relative;
+}
+
+.search-wrap span {
+    position: absolute;
+    left: 13px;
+    top: 8px;
+}
+
+.search-wrap input {
+    padding-left: 38px;
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.tool-card {
+    text-align: left;
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    padding: 21px;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+}
+
+.tool-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--blue);
+    box-shadow: var(--shadow);
+}
+
+.tool-icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    font-size: 21px;
+    background: var(--panel2);
+    margin-bottom: 16px;
+}
+
+.tool-card h3 {
+    font-size: 16px;
+    margin-bottom: 7px;
+}
+
+.tool-card p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+    min-height: 44px;
+}
+
+.tool-card .open-label {
+    display: inline-block;
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 800;
+    margin-top: 16px;
+}
+
+.no-results {
+    display: none;
+    text-align: center;
+    color: var(--muted);
+    padding: 30px;
+}
+
+.tool-workspace {
+    display: none;
+    margin-top: 25px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 23px;
+    scroll-margin-top: 100px;
+}
+
+.tool-workspace.active {
+    display: block;
+}
+
+.tool-workspace h3 {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.tool-workspace > p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 17px;
+}
+
+.tool-workspace textarea {
+    min-height: 150px;
+}
+
+.tool-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.tool-result {
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: 14px;
+    min-height: 55px;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+    font-size: 14px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.feature {
+    padding: 22px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    border-radius: 16px;
+}
+
+.feature-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+.feature h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.feature p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.faq-list {
+    display: grid;
+    gap: 10px;
+}
+
+details {
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: var(--panel);
+    padding: 16px 19px;
+}
+
+summary {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 750;
+}
+
+details p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 12px;
+    line-height: 1.8;
+}
+
+footer {
+    margin-top: 55px;
+    border-top: 1px solid var(--border);
+    padding: 35px 0 28px;
+}
+
+.footer-inner {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-brand p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.footer-copyright {
+    color: var(--muted);
+    font-size: 13px;
+    text-align: right;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 22px;
+}
+
+.footer-links a {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.footer-links a:hover {
+    color: var(--text);
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--border);
+    margin-top: 100px;
+    padding-top: 28px;
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.9;
+    margin: 0;
+}
+
+.footer-bottom .founder-name {
+    color: var(--primary, #818cf8);
+    font-weight: 750;
+}
+
+.toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translate(-50%, 20px);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 50;
+    color: white;
+    background: #202d48;
+    border: 1px solid #405477;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 13px;
+    box-shadow: var(--shadow);
+    transition: .25s;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+@media (max-width: 850px) {
+    .nav-links {
+        gap: 14px;
+    }
+
+    .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero h1 {
+        letter-spacing: -1.5px;
+    }
+}
+
+@media (max-width: 620px) {
+    .navbar {
+        min-height: 67px;
+    }
+
+    .menu-btn {
+        display: block;
+    }
+
+    .nav-actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 67px;
+        left: 0;
+        right: 0;
+        padding: 18px 4%;
+        background: var(--panel);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 11px 0;
+    }
+
+    .hero {
+        padding-top: 53px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+
+    .section-heading {
+        align-items: start;
+        flex-direction: column;
+    }
+
+    .workspace {
+        padding: 15px;
+        border-radius: 16px;
+    }
+
+    .editor-bottom {
+        align-items: start;
+        flex-direction: column;
+    }
+
+    .tools-grid, .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tool-card p {
+        min-height: auto;
+    }
+
+    .tool-fields {
+        grid-template-columns: 1fr;
+    }
+
+    .goal-top {
+        align-items: start;
+        flex-direction: column;
+    }
+
+    .goal-caption {
+        flex-direction: column;
+    }
+
+    .footer-inner {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+    }
+
+    .footer-copyright {
+        text-align: center;
+    }
+
+    .footer-bottom {
+        margin-top: 45px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="container navbar">
+        <a class="logo" href="#home" aria-label="WordCount Pro Home">
+            <span class="logo-icon">W</span>
+            <span>WordCount <span>Pro</span></span>
+        </a>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="#home">Home</a>
+            <a href="#counter">Word Counter</a>
+            <a href="#tools">Explore Tools</a>
+            <a href="#features">Features</a>
+            <a href="#faq">FAQ</a>
+        </nav>
+
+        <div class="nav-actions">
+            <button class="js-logo-btn" id="jsCompanyLogo" type="button" title="JS Company — Jeet Sharma" aria-label="About JS Company" aria-haspopup="dialog" aria-controls="jsCompanyModal">JS</button>
+            <button class="theme-btn" id="themeBtn" aria-label="Toggle light or dark theme" title="Change theme">☀</button>
+            <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu">☰</button>
+        </div>
+    </div>
+</header>
+
+<main id="home">
+
+<section class="hero container">
+    <div class="eyebrow"><i></i> YOUR ALL-IN-ONE WRITING TOOLKIT</div>
+
+    <h1>
+        Every word matters.<br>
+        <span class="gradient-text">Make yours count.</span>
+    </h1>
+
+    <p>
+        Count, clean, transform and improve your text with a collection
+        of simple writing tools. Free to use, right in your browser.
+    </p>
+
+    <div class="hero-actions">
+        <a href="#counter" class="btn btn-primary">✍ Start Writing <span>→</span></a>
+        <a href="#tools" class="btn btn-secondary">Explore All Tools ↗</a>
+    </div>
+
+    <div class="trust-row">
+        <span>Free tools</span>
+        <span>No account required</span>
+        <span>Browser-based text processing</span>
+    </div>
+</section>
+
+<section class="section container" id="counter">
+    <div class="section-heading">
+        <div>
+            <h2>Smart Text Analyzer</h2>
+            <p>Get live insights as you type or paste your text.</p>
+        </div>
+        <span class="text-link">● Live counting</span>
+    </div>
+
+    <div class="workspace">
+        <div class="workspace-top">
+            <div class="workspace-title">
+                <div class="tool-icon" style="margin:0">📝</div>
+                <div>
+                    <h3>Your writing space</h3>
+                    <p>Your text is processed in this browser.</p>
+                </div>
+            </div>
+            <span class="live-badge">● ANALYZER ACTIVE</span>
+        </div>
+
+        <textarea id="mainText" placeholder="Start typing here, or paste your article, essay, assignment or any text..." aria-label="Text to analyze"></textarea>
+
+        <div class="editor-bottom">
+            <div class="button-group">
+                <button class="small-btn primary" id="copyMain">📋 Copy text</button>
+                <button class="small-btn" id="downloadMain">⬇ Download .txt</button>
+                <button class="small-btn" id="clearMain">✕ Clear all</button>
+            </div>
+            <div class="status" id="mainStatus" aria-live="polite">Ready for your text</div>
+        </div>
+    </div>
+
+    <div class="stats-grid" aria-live="polite">
+        <div class="stat-card">
+            <div class="stat-label">📝 Total words</div>
+            <div class="stat-number" id="wordCount">0</div>
+            <div class="stat-note">Words in your text</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">🔤 Characters</div>
+            <div class="stat-number" id="charCount">0</div>
+            <div class="stat-note">Including spaces</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">📄 Sentences</div>
+            <div class="stat-number" id="sentenceCount">0</div>
+            <div class="stat-note">Approximate count</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">📚 Paragraphs</div>
+            <div class="stat-number" id="paragraphCount">0</div>
+            <div class="stat-note">Non-empty paragraphs</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">⌨ Without spaces</div>
+            <div class="stat-number" id="noSpaceCount">0</div>
+            <div class="stat-note">Characters excluding whitespace</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">⏱ Reading time</div>
+            <div class="stat-number" id="readTime">0 sec</div>
+            <div class="stat-note">At 200 words per minute</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">🎤 Speaking time</div>
+            <div class="stat-number" id="speakTime">0 sec</div>
+            <div class="stat-note">At 130 words per minute</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">🔡 Unique words</div>
+            <div class="stat-number" id="uniqueCount">0</div>
+            <div class="stat-note">Distinct word forms</div>
+        </div>
+    </div>
+
+    <div class="goal-panel">
+        <div class="goal-top">
+            <div>
+                <h3>🎯 Your writing goal</h3>
+                <p>Set a word target and track your progress.</p>
+            </div>
+            <div class="goal-controls">
+                <input class="field" type="number" min="1" max="1000000" value="500" id="goalInput" aria-label="Word goal">
+                <button class="small-btn primary" id="setGoal">Set goal</button>
+            </div>
+        </div>
+        <div class="progress-track">
+            <div class="progress-fill" id="goalFill"></div>
+        </div>
+        <div class="goal-caption">
+            <span id="goalCaption">0 of 500 words</span>
+            <span id="goalPercent">0% complete</span>
+        </div>
+    </div>
+</section>
+
+<section class="section container tools-section" id="tools">
+    <div class="tools-top">
+        <div>
+            <h2>Explore Writing Tools <span class="gradient-text">✦</span></h2>
+            <p>Small tools to make everyday text tasks easier.</p>
+        </div>
+        <div class="search-wrap">
+            <span>⌕</span>
+            <input class="field" id="toolSearch" type="search" placeholder="Search tools..." aria-label="Search writing tools">
+        </div>
+    </div>
+
+    <div class="tools-grid" id="toolsGrid">
+        <button class="tool-card" data-tool="case">
+            <span class="tool-icon">🔠</span>
+            <h3>Case Converter</h3>
+            <p>Change text to uppercase, lowercase, title case or sentence case.</p>
+            <span class="open-label">Open tool →</span>
+        </button>
+
+        <button class="tool-card" data-tool="spaces">
+            <span class="tool-icon">🧹</span>
+            <h3>Space Cleaner</h3>
+            <p>Remove extra spaces and clean up messy text formatting.</p>
+            <span class="open-label">Open tool →</span>
+        </button>
+
+        <button class="tool-card" data-tool="reverse">
+            <span class="tool-icon">🔄</span>
+            <h3>Text Reverser</h3>
+            <p>Reverse the characters in your text with a single click.</p>
+            <span class="open-label">Open tool →</span>
+        </button>
+
+        <button class="tool-card" data-tool="find">
+            <span class="tool-icon">🔎</span>
+            <h3>Find & Replace</h3>
+            <p>Find a word or phrase and replace its occurrences.</p>
+            <span class="open-label">Open tool →</span>
+        </button>
+
+        <button class="tool-card" data-tool="duplicates">
+            <span class="tool-icon">📑</span>
+            <h3>Duplicate Line Remover</h3>
+            <p>Remove repeated lines while keeping the original order.</p>
+            <span class="open-label">Open tool →</span>
+        </button>
+
+        <button class="tool-card" data-tool="sort">
+            <span class="tool-icon">🔤</span>
+            <h3>Line Sorter</h3>
+            <p>Arrange lines alphabetically from A to Z or Z to A.</p>
+            <span class="open-label">Open tool →</span>
+        </button>
+
+        <button class="tool-card" data-tool="spacescount">
+            <span class="tool-icon">📏</span>
+            <h3>Character Inspector</h3>
+            <p>Check letters, digits, whitespace and punctuation counts.</p>
+            <span class="open-label">Open tool →</span>
+        </button>
+
+        <button class="tool-card" data-tool="compare">
+            <span class="tool-icon">⚖️</span>
+            <h3>Text Comparison</h3>
+            <p>Compare two texts and see whether their content matches.</p>
+            <span class="open-label">Open tool →</span>
+        </button>
+
+        <button class="tool-card" data-tool="lorem">
+            <span class="tool-icon">📃</span>
+            <h3>Sample Text Generator</h3>
+            <p>Generate sample placeholder text for layouts and practice.</p>
+            <span class="open-label">Open tool →</span>
+        </button>
+    </div>
+
+    <div class="no-results" id="noResults">No tools match your search. Try another keyword.</div>
+
+    <div class="tool-workspace" id="toolWorkspace">
+        <h3 id="toolTitle">Tool</h3>
+        <p id="toolDescription">Use the selected tool below.</p>
+
+        <textarea id="toolInput" placeholder="Enter your text here..." aria-label="Text tool input"></textarea>
+
+        <div class="tool-fields" id="toolFields"></div>
+
+        <div class="button-group" style="margin-top:14px">
+            <button class="btn btn-primary" id="runTool">Run tool →</button>
+            <button class="btn btn-secondary" id="useMain">Use main text</button>
+            <button class="btn btn-secondary" id="copyResult">Copy result</button>
+            <button class="btn btn-secondary" id="downloadResult">Download result</button>
+        </div>
+
+        <div class="tool-result" id="toolResult" aria-live="polite">Your result will appear here.</div>
+    </div>
+</section>
+
+<section class="section container" id="features">
+    <div class="section-heading">
+        <div>
+            <h2>Made for better writing</h2>
+            <p>Useful features without unnecessary complexity.</p>
+        </div>
+    </div>
+
+    <div class="feature-grid">
+        <article class="feature">
+            <div class="feature-icon">⚡</div>
+            <h3>Instant results</h3>
+            <p>Word and character statistics update while you type, without a separate submit button.</p>
+        </article>
+        <article class="feature">
+            <div class="feature-icon">🔒</div>
+            <h3>Browser-based processing</h3>
+            <p>The text tools on this page process your input locally instead of sending it to a server.</p>
+        </article>
+        <article class="feature">
+            <div class="feature-icon">📱</div>
+            <h3>Works across screens</h3>
+            <p>The layout adjusts for desktop, tablet and mobile screens.</p>
+        </article>
+    </div>
+</section>
+
+<section class="section container" id="faq">
+    <div class="section-heading">
+        <div>
+            <h2>Frequently Asked Questions</h2>
+            <p>Quick answers about using the toolkit.</p>
+        </div>
+    </div>
+
+    <div class="faq-list">
+        <details>
+            <summary>How does the word counter work?</summary>
+            <p>It splits non-empty text at whitespace boundaries to estimate the number of words. Results can vary for some languages and special formats.</p>
+        </details>
+        <details>
+            <summary>Is WordCount Pro free to use?</summary>
+            <p>This version is a free, browser-based tool. It does not require an account to use its included features.</p>
+        </details>
+        <details>
+            <summary>Is my text uploaded anywhere?</summary>
+            <p>The included text analysis and editing tools run locally in your browser. This page does not contain code to upload your text to a server.</p>
+        </details>
+        <details>
+            <summary>Can I download my edited text?</summary>
+            <p>Yes. Use the download buttons to save text as a plain .txt file on your device.</p>
+        </details>
+        <details>
+            <summary>How is reading time calculated?</summary>
+            <p>Reading time is estimated at 200 words per minute. Speaking time uses an estimate of 130 words per minute. Actual time varies by person and content.</p>
+        </details>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <div class="container footer-inner">
+        <div class="footer-brand">
+            <a class="logo" href="#home">
+                <span class="logo-icon">W</span>
+                <span>WordCount <span>Pro</span></span>
+            </a>
+            <p>A simple toolkit for clearer, more productive writing.</p>
+        </div>
+        <nav class="footer-links" aria-label="Footer navigation">
+            <a href="#home">Home</a>
+            <a href="#counter">Word Counter</a>
+            <a href="#tools">All Tools</a>
+            <a href="#faq">FAQ</a>
+        </nav>
+        <p class="footer-copyright">© <span id="year"></span> WordCount Pro</p>
+    </div>
+    <div class="container footer-bottom">
+        <p>WordCount Pro — Simple tools for better writing.</p>
+        <p>Created with care by <span class="founder-name">Jeet Sharma</span></p>
+        <p>© <span id="yearBottom"></span> Jeet Sharma. All rights reserved.</p>
+    </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const mainText = $("mainText");
+let currentGoal = 500;
+let toastTimer;
+
+function showToast(message) {
+    const toast = $("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2400);
+}
+
+function getWords(text) {
+    const trimmed = text.trim();
+    return trimmed ? trimmed.split(/\s+/u) : [];
+}
+
+function formatTime(seconds) {
+    if (seconds < 60) return seconds + " sec";
+    const minutes = Math.floor(seconds / 60);
+    const remaining = seconds % 60;
+    return minutes + " min" + (remaining ? " " + remaining + " sec" : "");
+}
+
+function analyze() {
+    const text = mainText.value;
+    const words = getWords(text);
+    const trimmed = text.trim();
+    const sentences = trimmed.match(/[.!?]+(?=\s|$)/g) || [];
+    const paragraphs = trimmed
+        ? trimmed.split(/\n\s*\n/).filter(p => p.trim()).length
+        : 0;
+    const unique = new Set(words.map(word => word.toLocaleLowerCase())).size;
+
+    $("wordCount").textContent = words.length.toLocaleString();
+    $("charCount").textContent = text.length.toLocaleString();
+    $("sentenceCount").textContent = sentences.length.toLocaleString();
+    $("paragraphCount").textContent = paragraphs.toLocaleString();
+    $("noSpaceCount").textContent = text.replace(/\s/g, "").length.toLocaleString();
+    $("readTime").textContent = formatTime(Math.ceil(words.length / 200 * 60));
+    $("speakTime").textContent = formatTime(Math.ceil(words.length / 130 * 60));
+    $("uniqueCount").textContent = unique.toLocaleString();
+
+    const percent = Math.min(100, Math.round(words.length / currentGoal * 100));
+    $("goalFill").style.width = percent + "%";
+    $("goalCaption").textContent = words.length + " of " + currentGoal + " words";
+    $("goalPercent").textContent = percent + "% complete";
+    $("mainStatus").textContent = words.length
+        ? words.length + " words analyzed"
+        : "Ready for your text";
+}
+
+mainText.addEventListener("input", analyze);
+
+async function copyText(text) {
+    if (!text) {
+        showToast("There is no text to copy.");
+        return false;
+    }
+
+    try {
+        await navigator.clipboard.writeText(text);
+        showToast("Text copied successfully!");
+        return true;
+    } catch (error) {
+        const area = document.createElement("textarea");
+        area.value = text;
+        area.style.position = "fixed";
+        area.style.opacity = "0";
+        document.body.appendChild(area);
+        area.select();
+
+        let success = false;
+        try {
+            success = document.execCommand("copy");
+        } catch (_) {}
+
+        area.remove();
+        showToast(success ? "Text copied successfully!" : "Copy failed. Please select and copy manually.");
+        return success;
+    }
+}
+
+function downloadText(text, filename = "wordcount-text.txt") {
+    const blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    showToast("Download started.");
+}
+
+$("copyMain").addEventListener("click", () => copyText(mainText.value));
+$("downloadMain").addEventListener("click", () => downloadText(mainText.value));
+$("clearMain").addEventListener("click", () => {
+    mainText.value = "";
+    analyze();
+    mainText.focus();
+    showToast("Text cleared.");
+});
+
+$("setGoal").addEventListener("click", () => {
+    const value = Number($("goalInput").value);
+    if (!Number.isInteger(value) || value < 1 || value > 1000000) {
+        showToast("Enter a goal between 1 and 1,000,000.");
+        return;
+    }
+    currentGoal = value;
+    analyze();
+    showToast("Writing goal updated.");
+});
+
+$("themeBtn").addEventListener("click", () => {
+    document.body.classList.toggle("light");
+    const light = document.body.classList.contains("light");
+    $("themeBtn").textContent = light ? "☾" : "☀";
+    try {
+        localStorage.setItem("wcp-theme", light ? "light" : "dark");
+    } catch (_) {}
+});
+
+try {
+    if (localStorage.getItem("wcp-theme") === "light") {
+        document.body.classList.add("light");
+        $("themeBtn").textContent = "☾";
+    }
+} catch (_) {}
+
+$("menuBtn").addEventListener("click", () => {
+    const nav = $("navLinks");
+    nav.classList.toggle("open");
+    $("menuBtn").textContent = nav.classList.contains("open") ? "✕" : "☰";
+});
+
+document.querySelectorAll(".nav-links a").forEach(link => {
+    link.addEventListener("click", () => {
+        $("navLinks").classList.remove("open");
+        $("menuBtn").textContent = "☰";
+    });
+});
+
+$("toolSearch").addEventListener("input", () => {
+    const query = $("toolSearch").value.trim().toLowerCase();
+    let visible = 0;
+
+    document.querySelectorAll(".tool-card").forEach(card => {
+        const matches = card.textContent.toLowerCase().includes(query);
+        card.style.display = matches ? "" : "none";
+        if (matches) visible++;
+    });
+
+    $("noResults").style.display = visible ? "none" : "block";
+});
+
+const toolInfo = {
+    case: {
+        title: "Case Converter",
+        description: "Choose how you want to change the capitalization of your text.",
+        fields: `<select class="field" id="caseMode" aria-label="Capitalization style">
+            <option value="upper">UPPERCASE</option>
+            <option value="lower">lowercase</option>
+            <option value="title">Title Case</option>
+            <option value="sentence">Sentence case</option>
+        </select>`,
+        run(text) {
+            const mode = $("caseMode").value;
+            if (mode === "upper") return text.toLocaleUpperCase();
+            if (mode === "lower") return text.toLocaleLowerCase();
+            if (mode === "title") {
+                return text.toLocaleLowerCase().replace(/(^|[\s-])(\p{L})/gu, (match, prefix, letter) => prefix + letter.toLocaleUpperCase());
+            }
+            return text.toLocaleLowerCase().replace(/(^\s*\p{L}|[.!?]\s+\p{L})/gu, match => match.toLocaleUpperCase());
+        }
+    },
+    spaces: {
+        title: "Space Cleaner",
+        description: "Remove repeated spaces and tidy up blank lines.",
+        fields: "",
+        run(text) {
+            return text.split("\n").map(line => line.trim().replace(/[ \t]+/g, " ")).join("\n").replace(/\n{3,}/g, "\n\n").trim();
+        }
+    },
+    reverse: {
+        title: "Text Reverser",
+        description: "Reverse the characters in your text.",
+        fields: "",
+        run(text) {
+            return Array.from(text).reverse().join("");
+        }
+    },
+    find: {
+        title: "Find & Replace",
+        description: "Find text and replace matching occurrences. Matching is case-sensitive.",
+        fields: `<input class="field" id="findValue" placeholder="Find this text" aria-label="Find text">
+                 <input class="field" id="replaceValue" placeholder="Replace with" aria-label="Replacement text">`,
+        run(text) {
+            const find = $("findValue").value;
+            const replace = $("replaceValue").value;
+            if (!find) return "Please enter the text you want to find.";
+            return text.split(find).join(replace);
+        }
+    },
+    duplicates: {
+        title: "Duplicate Line Remover",
+        description: "Remove repeated lines while preserving the first occurrence and original order.",
+        fields: "",
+        run(text) {
+            const seen = new Set();
+            return text.split(/\r?\n/).filter(line => {
+                if (seen.has(line)) return false;
+                seen.add(line);
+                return true;
+            }).join("\n");
+        }
+    },
+    sort: {
+        title: "Line Sorter",
+        description: "Sort lines alphabetically in ascending or descending order.",
+        fields: `<select class="field" id="sortMode" aria-label="Sort order">
+            <option value="asc">A → Z</option>
+            <option value="desc">Z → A</option>
+        </select>`,
+        run(text) {
+            const lines = text.split(/\r?\n/).sort((a,b) => a.localeCompare(b));
+            if ($("sortMode").value === "desc") lines.reverse();
+            return lines.join("\n");
+        }
+    },
+    spacescount: {
+        title: "Character Inspector",
+        description: "Count letters, digits, whitespace and punctuation characters.",
+        fields: "",
+        run(text) {
+            const letters = (text.match(/\p{L}/gu) || []).length;
+            const digits = (text.match(/\p{N}/gu) || []).length;
+            const whitespace = (text.match(/\s/gu) || []).length;
+            const punctuation = (text.match(/[^\p{L}\p{N}\s]/gu) || []).length;
+            return `Letters: ${letters}\nDigits: ${digits}\nWhitespace: ${whitespace}\nPunctuation and symbols: ${punctuation}\nTotal characters: ${text.length}`;
+        }
+    },
+    compare: {
+        title: "Text Comparison",
+        description: "Compare the main input with a second text.",
+        fields: `<textarea id="compareValue" placeholder="Paste the second text here..." aria-label="Second text" style="min-height:100px"></textarea>`,
+        run(text) {
+            const second = $("compareValue").value;
+            if (text === second) return "The two texts are exactly the same.";
+            const firstWords = getWords(text);
+            const secondWords = getWords(second);
+            return `The texts are different.\n\nFirst text: ${firstWords.length} words, ${text.length} characters.\nSecond text: ${secondWords.length} words, ${second.length} characters.\n\nLength difference: ${Math.abs(text.length - second.length)} characters.`;
+        }
+    },
+    lorem: {
+        title: "Sample Text Generator",
+        description: "Generate placeholder text for layout testing and writing practice.",
+        fields: `<select class="field" id="loremCount" aria-label="Number of sample sentences">
+            <option value="3">3 sentences</option>
+            <option value="5" selected>5 sentences</option>
+            <option value="10">10 sentences</option>
+        </select>`,
+        run() {
+            const sentences = [
+                "Clear writing helps people understand ideas more easily.",
+                "Good tools can make everyday tasks simpler and faster.",
+                "Practice regularly to improve your writing skills.",
+                "Organized information is easier to read and remember.",
+                "Small improvements can make a meaningful difference.",
+                "Every project starts with a simple first step.",
+                "Useful feedback helps turn rough ideas into better work.",
+                "Take time to review your writing before sharing it.",
+                "Simple language can communicate complex ideas effectively.",
+                "Consistency helps build confidence and useful habits."
+            ];
+            const count = Number($("loremCount").value);
+            return Array.from({length: count}, (_, i) => sentences[i % sentences.length]).join(" ");
+        }
+    }
+};
+
+let activeTool = null;
+
+function openTool(name) {
+    activeTool = name;
+    const info = toolInfo[name];
+    $("toolTitle").textContent = info.title;
+    $("toolDescription").textContent = info.description;
+    $("toolFields").innerHTML = info.fields;
+    $("toolInput").value = mainText.value;
+    $("toolResult").textContent = "Your result will appear here.";
+    $("toolWorkspace").classList.add("active");
+    $("toolWorkspace").scrollIntoView({behavior: "smooth", block: "start"});
+}
+
+document.querySelectorAll(".tool-card").forEach(card => {
+    card.addEventListener("click", () => openTool(card.dataset.tool));
+});
+
+$("useMain").addEventListener("click", () => {
+    $("toolInput").value = mainText.value;
+    showToast("Main text loaded into the selected tool.");
+});
+
+$("runTool").addEventListener("click", () => {
+    if (!activeTool) return;
+    const result = toolInfo[activeTool].run($("toolInput").value);
+    $("toolResult").textContent = result;
+});
+
+$("copyResult").addEventListener("click", () => {
+    const result = $("toolResult").textContent;
+    if (result === "Your result will appear here.") {
+        showToast("Run the tool first to create a result.");
+        return;
+    }
+    copyText(result);
+});
+
+$("downloadResult").addEventListener("click", () => {
+    const result = $("toolResult").textContent;
+    if (result === "Your result will appear here.") {
+        showToast("Run the tool first to create a result.");
+        return;
+    }
+    downloadText(result, "wordcount-tool-result.txt");
+});
+
+$("year").textContent = new Date().getFullYear();
+if ($("yearBottom")) $("yearBottom").textContent = new Date().getFullYear();
+analyze();
+</script>
+
+
+<style>
+/* JS Company founder popup */
+.js-company-overlay[hidden] { display: none !important; }
+.js-company-overlay {
+    position: fixed; inset: 0; z-index: 10000; display: flex;
+    align-items: center; justify-content: center; padding: 18px;
+    background: rgba(4,8,20,.72); backdrop-filter: blur(7px);
+}
+.js-company-card {
+    position: relative; width: min(100%, 430px); max-height: 90vh; overflow-y: auto;
+    padding: 30px 26px 26px; border: 1px solid #34415e; border-radius: 22px;
+    background: #111827; color: #f9fafb; text-align: center;
+    box-shadow: 0 24px 80px rgba(0,0,0,.4); animation: jsCardIn .22s ease-out;
+}
+@keyframes jsCardIn { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } }
+.js-company-close {
+    position: absolute; top: 12px; right: 14px; width: 34px; height: 34px;
+    border: 0; border-radius: 10px; background: #263248; color: #fff;
+    font-size: 25px; line-height: 1; cursor: pointer;
+}
+.js-company-avatar {
+    display: grid; place-items: center; width: 72px; height: 72px; margin: 4px auto 15px;
+    border-radius: 22px; background: linear-gradient(135deg,#4f46e5,#9333ea);
+    color: #fff; font-size: 27px; font-weight: 850; box-shadow: 0 8px 25px rgba(79,70,229,.3);
+}
+.js-company-card h2 { margin: 0 0 10px; font-size: 27px; color: #fff; }
+.js-company-description { margin: 0 auto 20px; max-width: 340px; color: #cbd5e1; line-height: 1.65; font-size: 14px; }
+.js-company-info { padding: 15px 17px; border: 1px solid #2b3850; border-radius: 14px; background: #172033; text-align: left; }
+.js-company-info p { margin: 8px 0; color: #e5e7eb; font-size: 14px; }
+.js-company-info strong { color: #a5b4fc; }
+.js-company-thanks { margin: 18px 0 0; color: #a5b4fc; font-size: 13px; }
+@media (prefers-reduced-motion: reduce) { .js-company-card { animation: none; } }
+</style>
+
+<div class="js-company-overlay" id="jsCompanyModal" hidden>
+    <section class="js-company-card" role="dialog" aria-modal="true"
+             aria-labelledby="jsCompanyTitle" aria-describedby="jsCompanyDescription">
+        <button class="js-company-close" id="jsCompanyClose" type="button" aria-label="Close">&times;</button>
+        <div class="js-company-avatar" aria-hidden="true">JS</div>
+        <h2 id="jsCompanyTitle">JS Company</h2>
+        <p class="js-company-description" id="jsCompanyDescription">
+            Welcome to JS Company, the creator of WordCount Pro. Our goal is to make writing and text analysis simple and convenient for everyone.
+        </p>
+        <div class="js-company-info">
+            <p><strong>Company Name:</strong> JS Company</p>
+            <p><strong>Founder:</strong> Jeet Sharma</p>
+            <p><strong>Product / Website:</strong> WordCount Pro</p>
+            <p><strong>Website Type:</strong> Browser-based writing and text-analysis tool</p>
+            <p><strong>Copyright:</strong> © <span id="jsCompanyYear">2026</span> WordCount Pro / JS Company. All rights reserved.</p>
+        </div>
+        <p class="js-company-thanks">Thank you for visiting WordCount Pro!</p>
+    </section>
+</div>
+
+<script>
+(function () {
+    const logo = document.getElementById("jsCompanyLogo");
+    const modal = document.getElementById("jsCompanyModal");
+    const closeButton = document.getElementById("jsCompanyClose");
+    const companyYear = document.getElementById("jsCompanyYear");
+    if (companyYear) companyYear.textContent = new Date().getFullYear();
+    if (!logo || !modal || !closeButton) return;
+    let previousFocus = null;
+
+    function openModal() {
+        previousFocus = document.activeElement;
+        modal.hidden = false;
+        document.body.style.overflow = "hidden";
+        closeButton.focus();
+    }
+    function closeModal() {
+        modal.hidden = true;
+        document.body.style.overflow = "";
+        if (previousFocus && typeof previousFocus.focus === "function") previousFocus.focus();
+    }
+    logo.addEventListener("click", openModal);
+    closeButton.addEventListener("click", closeModal);
+    modal.addEventListener("click", event => { if (event.target === modal) closeModal(); });
+    document.addEventListener("keydown", event => {
+        if (!modal.hidden && event.key === "Escape") closeModal();
+    });
+})();
+</script>
+
+</body>
+</html>
